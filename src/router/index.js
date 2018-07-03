@@ -22,7 +22,7 @@ import Layout from '../views/layout/Layout'
   }
 **/
 export const constantRouterMap = [
-  { path: '/login', component: () => import('@/views/login/index'), hidden: true },
+  { path: '/login', component: () => import('@/views/login/index'),hidden:true },
   { path: '/404', component: () => import('@/views/404'), hidden: true },
 
   {
@@ -31,24 +31,29 @@ export const constantRouterMap = [
     redirect: '/dashboard',
     name: 'Dashboard',
     hidden: true,
+    meta: { 
+      title: '首页'
+     },
     children: [{
       path: 'dashboard',
       component: () => import('@/views/dashboard/index')
     }]
   },
-
   {
-    path: '/example',
+    path: '/members',
     component: Layout,
-    redirect: '/example/table',
-    name: 'Example',
-    meta: { title: 'Example', icon: 'example' },
+    redirect: '/members/hygl',
+    name: 'members',
+    meta: { 
+      title: '会员功能', 
+      icon: 'example'
+     },
     children: [
       {
-        path: 'table',
-        name: 'Table',
+        path: 'hygl',
+        name: 'hygl',
         component: () => import('@/views/table/index'),
-        meta: { title: 'Table', icon: 'table' }
+        meta: { title: '会员管理', icon: 'table' ,noCache:true}
       },
       {
         path: 'tree',
