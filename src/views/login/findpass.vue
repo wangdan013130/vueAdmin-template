@@ -1,7 +1,6 @@
 <template>
   <div class="login-container">
     <el-form class="login-form" autoComplete="on" :model="loginForm" :rules="loginRules" ref="loginForm" label-position="left">
-      <h3 class="title">客服后台</h3>
       <el-form-item prop="username">
         <span class="svg-container svg-container_login">
           <svg-icon icon-class="user" />
@@ -18,14 +17,8 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" style="width:100%;" :loading="loading" @click.native.prevent="handleLogin">
-          登录
+          修改密码
         </el-button>
-      </el-form-item>
-      <el-form-item class="checkline" prop=“checkuser”>
-        <el-checkbox v-model="loginForm.checked" name="checkuser" @change="changeTip">同意用户协议</el-checkbox>
-          <router-link :to="{ path: '/findpass' }">
-            <a href="">忘记密码</a>
-          </router-link>
       </el-form-item>
       <!-- <div class="tips">
         <span style="margin-right:20px;">username: admin</span>
@@ -39,7 +32,6 @@
 import { isvalidUsername } from '@/utils/validate'
 
 export default {
-  /* eslint-disable */
   name: 'login',
   data() {
     const validateUsername = (rule, value, callback) => {
@@ -50,7 +42,7 @@ export default {
       }
     }
     const validatePass = (rule, value, callback) => {
-      if (!value) {
+      if (value.length < 5) {
         callback(new Error('密码错误'))
       } else {
         callback()
@@ -78,24 +70,18 @@ export default {
         this.pwdType = 'password'
       }
     },
-    changeTip() {
-      if (!this.loginForm.checked) {
-        this.$message.error('请同意用户协议')
-      }
-    },
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
           this.$store.dispatch('Login', this.loginForm).then(() => {
-            // console.log('aaaaaaaa')
             this.loading = false
             this.$router.push({ path: '/' })
           }).catch(() => {
             this.loading = false
           })
         } else {
-          this.$message.error('登录校验错误')
+          console.log('error submit!!')
           return false
         }
       })
@@ -191,17 +177,6 @@ $light_gray:#eee;
     color: $dark_gray;
     cursor: pointer;
     user-select: none;
-  }
-  .checkline {
-    border: 0;
-    border-radius: 0;
-    background: rgba(255,255,255,0);
-  }
-  a{
-    float:right;
-    line-height: 47px;
-    font-size: 14px;
-    color: #409EFF
   }
 }
 </style>
