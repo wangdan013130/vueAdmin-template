@@ -1,31 +1,32 @@
 <template>
   <div class="dashboard-container">
-    <div class="dashboard-text">name:{{name}}</div>
-    <div class="dashboard-text">mid:<span>{{mid}}</span></div>
-  </div>
+  <component :is="currentRole"></component>
+</div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-export default {
-  name: 'dashboard',
-  computed: {
-    ...mapGetters([
-      'name',
-      'mid'
-    ])
-  }
-}
-</script>
+  import { mapGetters } from 'vuex'
+  import memberDashboard from './memberui'
 
-<style rel="stylesheet/scss" lang="scss" scoped>
-.dashboard {
-  &-container {
-    margin: 30px;
+  export default {
+    name: 'dashboard',
+    components: { memberDashboard },
+    data() {
+      return {
+        currentRole: 'memberDashboard'
+      }
+    },
+    computed: {
+      ...mapGetters([
+        'roles'
+      ])
+    },
+    created() {
+      // console.log(this.roles)
+      // this.currentRole = 10
+      if (this.roles[0] === 10) {
+        this.currentRole = 'memberDashboard'
+      }
+    }
   }
-  &-text {
-    font-size: 30px;
-    line-height: 46px;
-  }
-}
-</style>
+</script>

@@ -20,6 +20,8 @@ import Layout from '../views/layout/Layout'
     title: 'title'               the name show in submenu and breadcrumb (recommend set)
     icon: 'svg-name'             the icon show in the sidebar,
   }
+  当你需要懒加载 lazy-loading 的时候，需要一个个把routes的component改为() => import('@/views/login.vue')
+  当你的项目页面越来越多之后，在开发环境之中使用 lazy-loading 会变得不太合适，每次更改代码触发热更新都会变得非常的慢。所以建议只在生成环境之中使用路由懒加载功能。
 **/
 export const constantRouterMap = [
   { path: '/login', component: () => import('@/views/login/index'), hidden: true },
@@ -59,7 +61,6 @@ export const constantRouterMap = [
       }
     ]
   },
-
   {
     path: '/form',
     component: Layout,
