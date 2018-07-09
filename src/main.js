@@ -11,7 +11,7 @@ import '@/styles/index.scss' // global css
 import App from './App'
 import router from './router'
 import store from './store'
-
+import i18n from './lang'
 import '@/icons' // icon
 import '@/permission' // permission control
 
@@ -23,6 +23,7 @@ new Vue({
   el: '#app',
   router,
   store,
+  i18n,
   template: '<App/>',
   components: { App }
 })
