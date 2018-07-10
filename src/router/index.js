@@ -34,41 +34,108 @@ export const constantRouterMap = [
     redirect: 'dashboard',
     children: [{
       path: 'dashboard',
-      component: () => import('@/views/dashboard/index'),
       name: 'dashboard',
+      component: () => import('@/views/dashboard/index'),
       meta: { title: 'dashboard', icon: 'dashboard', noCache: true }
     }]
   },
   {
     path: '/members',
     component: Layout,
-    redirect: '/members/hygl',
-    name: 'members',
-    meta: { title: '会员功能', icon: 'example' },
+    meta: { title: 'members', icon: 'members' },
     children: [
       {
         path: 'hygl',
         name: 'hygl',
-        component: () => import('@/views/table/index'),
-        meta: { title: '会员管理', icon: 'table', noCache: true }
+        component: () => import('@/views/tree/index'),
+        meta: { title: 'hygl', icon: 'table' }
       },
       {
-        path: 'tree',
-        name: 'Tree',
+        path: 'rank',
+        name: 'rank',
         component: () => import('@/views/tree/index'),
-        meta: { title: 'Tree', icon: 'tree' }
+        meta: { title: 'rank', icon: 'rank' }
+      },
+      {
+        path: 'integrate',
+        name: 'integrate',
+        component: () => import('@/views/tree/index'),
+        meta: { title: 'integrate', icon: 'integrate' }
+      },
+      {
+        path: 'examine',
+        name: 'examine',
+        component: () => import('@/views/tree/index'),
+        meta: { title: 'examine', icon: 'examine' }
       }
     ]
   },
   {
-    path: '/form',
+    path: '/user',
     component: Layout,
+    meta: { title: 'user', icon: 'user' },
     children: [
       {
-        path: 'index',
-        name: 'Form',
-        component: () => import('@/views/form/index'),
-        meta: { title: 'Form', icon: 'form' }
+        path: 'sale',
+        name: 'sale',
+        component: () => import('@/views/tree/index'),
+        meta: { title: 'sale', icon: 'sale' }
+      },
+      {
+        path: 'userstatistics',
+        name: 'userstatistics',
+        component: () => import('@/views/tree/index'),
+        meta: { title: 'userstatistics', icon: 'userstatistics' }
+      }
+    ]
+  },
+  {
+    path: '/cardgroup',
+    component: Layout,
+    meta: { title: 'cardgroup', icon: 'cardgroup' },
+    children: [
+      {
+        path: 'cgmanager',
+        name: 'cgmanager',
+        component: () => import('@/views/tree/index'),
+        meta: { title: 'cgmanager', icon: 'cgmanager' }
+      },
+      {
+        path: 'cgstatistics',
+        name: 'cgstatistics',
+        component: () => import('@/views/tree/index'),
+        meta: { title: 'cgstatistics', icon: 'cgstatistics' }
+      },
+      {
+        path: 'cgkpimanage',
+        name: 'cgkpimanage',
+        component: () => import('@/views/tree/index'),
+        meta: { title: 'cgkpimanage', icon: 'cgkpimanage' }
+      }
+    ]
+  },
+  {
+    path: '/function',
+    component: Layout,
+    meta: { title: 'function', icon: 'function' },
+    children: [
+      {
+        path: 'charge',
+        name: 'charge',
+        component: () => import('@/views/tree/index'),
+        meta: { title: 'charge', icon: 'charge' }
+      },
+      {
+        path: 'check',
+        name: 'check',
+        component: () => import('@/views/tree/index'),
+        meta: { title: 'check', icon: 'check' }
+      },
+      {
+        path: 'changepass',
+        name: 'changepass',
+        component: () => import('@/views/tree/index'),
+        meta: { title: 'changepass', icon: 'changepass' }
       }
     ]
   },
