@@ -29,6 +29,7 @@
 
 <script>
 import PanThumb from '@/components/PanThumb'
+// import iconimg from '@/assets/producticon'
 export default {
   components: {
     PanThumb
