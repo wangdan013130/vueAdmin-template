@@ -5,6 +5,7 @@ export default {
     hygl: 'hygl',
     rank: 'rank',
     integrate: 'integrate',
+    examine: 'examine',
     cardgroup: 'cardgroup',
     cgstatistics: 'cgstatistics',
     cgkpimanage: 'cgkpimanage',
@@ -15,7 +16,6 @@ export default {
     charge: 'charge',
     check: 'check',
     changepass: 'changepass'
-
   },
   navbar: {
     logOut: 'Log Out',

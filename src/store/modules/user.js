@@ -4,23 +4,32 @@ import { getToken, setToken, removeToken } from '@/utils/auth'
 const user = {
   state: {
     token: getToken(),
-    name: '',
-    mid: 0,
-    roles: []
+    info: {
+      adminLevel: 0,
+      buyReward: 0,
+      gold: 0,
+      isbindTwoLevel: false,
+      mGoldLevel: 0,
+      mMoneyLevel: 0,
+      mName: '',
+      mNick: '',
+      mTime: '',
+      mbindphone: '',
+      mid: 0,
+      money: 0,
+      rebateGoldSend: 0,
+      rebateMoneySend: 0,
+      score: 0,
+      sellMoneyLevel: 0
+    }
   },
 
   mutations: {
     SET_TOKEN: (state, token) => {
       state.token = token
     },
-    SET_NAME: (state, name) => {
-      state.name = name
-    },
-    SET_MID: (state, mid) => {
-      state.mid = mid
-    },
-    SET_ROLES: (state, roles) => {
-      state.roles.push(roles)
+    SET_INFO: (state, info) => {
+      state.info = info
     }
   },
 
@@ -46,12 +55,10 @@ const user = {
         getInfo().then(response => {
           const data = response.data
           if (data.adminLevel >= 0) { // 验证返回的roles是否是一个非空数组
-            commit('SET_ROLES', data.adminLevel)
+            commit('SET_INFO', data)
           } else {
             reject('getInfo: roles must be a non-null array !')
           }
-          commit('SET_NAME', data.mName)
-          commit('SET_MID', data.mid)
           resolve(response)
         }).catch(error => {
           reject(error)
@@ -64,7 +71,24 @@ const user = {
       return new Promise((resolve, reject) => {
         logout(state.token).then(() => {
           commit('SET_TOKEN', '')
-          commit('SET_ROLES', [])
+          commit('SET_INFO', {
+            adminLevel: 0,
+            buyReward: 0,
+            gold: 0,
+            isbindTwoLevel: false,
+            mGoldLevel: 0,
+            mMoneyLevel: 0,
+            mName: '',
+            mNick: '',
+            mTime: '',
+            mbindphone: '',
+            mid: 0,
+            money: 0,
+            rebateGoldSend: 0,
+            rebateMoneySend: 0,
+            score: 0,
+            sellMoneyLevel: 0
+          })
           removeToken()
           resolve()
         }).catch(error => {

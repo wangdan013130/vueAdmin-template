@@ -14,7 +14,8 @@ import store from './store'
 import i18n from './lang'
 import '@/icons' // icon
 import '@/permission' // permission control
-
+import gameType from '@/assets/js/share' // permission control
+Vue.prototype.GAMETYPE = gameType
 Vue.use(ElementUI, { locale })
 
 Vue.config.productionTip = false

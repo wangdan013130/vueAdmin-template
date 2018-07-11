@@ -7,6 +7,8 @@
 <script>
   import { mapGetters } from 'vuex'
   import memberDashboard from './memberui'
+  // import managerDashboard from './manager'
+  // import adminDashboard from './admin'
 
   export default {
     name: 'dashboard',
@@ -18,15 +20,24 @@
     },
     computed: {
       ...mapGetters([
-        'roles'
+        'info'
       ])
     },
     created() {
       // console.log(this.roles)
       // this.currentRole = 10
-      if (this.roles[0] === 10) {
+      this.$store.dispatch('GetInfo').then(() => {
+        // a
+      }).catch(() => {
+        // a
+      })
+      if (this.info.adminLevel === 10) {
         this.currentRole = 'memberDashboard'
-      }
+      }/* else if(this.info.adminLevel === 3){
+        this.currentRole = 'managerDashboard'
+      }else if(this.info.adminLevel === 10){
+        this.currentRole = 'adminDashboard'
+      } */
     }
   }
 </script>
