@@ -36,15 +36,15 @@ export default new Router({
 
 export const asyncRouterMap = [
   {
-    path: '',
+    path: '/',
     component: Layout,
     redirect: 'dashboard',
-    meta: { role: [1, 3, 10] },
+    meta: { roles: [1, 3, 10] },
     children: [{
       path: 'dashboard',
       name: 'dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: 'dashboard', icon: 'dashboard', noCache: true, role: [1, 3, 10] }
+      meta: { title: 'dashboard', icon: 'dashboard', noCache: true, roles: [1, 3, 10] }
     }]
   },
   {
@@ -56,94 +56,94 @@ export const asyncRouterMap = [
         path: 'hygl',
         name: 'hygl',
         component: () => import('@/views/members/index'),
-        meta: { title: 'hygl', icon: 'table', role: [1, 3, 10] }
+        meta: { title: 'hygl', icon: 'table', roles: [1, 3, 10] }
       },
       {
         path: 'rank',
         name: 'rank',
         component: () => import('@/views/tree/index'),
-        meta: { title: 'rank', icon: 'rank', role: [1, 3, 10] }
+        meta: { title: 'rank', icon: 'rank', roles: [1, 3, 10] }
       },
       {
         path: 'integrate',
         name: 'integrate',
         component: () => import('@/views/tree/index'),
-        meta: { title: 'integrate', icon: 'integrate', role: [1, 3, 10] }
+        meta: { title: 'integrate', icon: 'integrate', roles: [1, 3, 10] }
       },
       {
         path: 'examine',
         name: 'examine',
         component: () => import('@/views/tree/index'),
-        meta: { title: 'examine', icon: 'examine', role: [1, 3, 10] }
+        meta: { title: 'examine', icon: 'examine', roles: [1, 3, 10] }
       }
     ]
   },
   {
     path: '/user',
     component: Layout,
-    meta: { title: 'user', icon: 'user', role: [1, 3, 10] },
+    meta: { title: 'user', icon: 'user', roles: [1, 3, 10] },
     children: [
       {
         path: 'sale',
         name: 'sale',
         component: () => import('@/views/tree/index'),
-        meta: { title: 'sale', icon: 'sale', role: [1, 3, 10] }
+        meta: { title: 'sale', icon: 'sale', roles: [1, 3, 10] }
       },
       {
         path: 'userstatistics',
         name: 'userstatistics',
         component: () => import('@/views/tree/index'),
-        meta: { title: 'userstatistics', icon: 'userstatistics', role: [1, 3, 10] }
+        meta: { title: 'userstatistics', icon: 'userstatistics', roles: [1, 3, 10] }
       }
     ]
   },
   {
     path: '/cardgroup',
     component: Layout,
-    meta: { title: 'cardgroup', icon: 'cardgroup', role: [1, 3, 10] },
+    meta: { title: 'cardgroup', icon: 'cardgroup', roles: [1, 3, 10] },
     children: [
       {
         path: 'cgmanager',
         name: 'cgmanager',
         component: () => import('@/views/tree/index'),
-        meta: { title: 'cgmanager', icon: 'cgmanager', role: [1, 3, 10] }
+        meta: { title: 'cgmanager', icon: 'cgmanager', roles: [1, 3, 10] }
       },
       {
         path: 'cgstatistics',
         name: 'cgstatistics',
         component: () => import('@/views/tree/index'),
-        meta: { title: 'cgstatistics', icon: 'cgstatistics', role: [1, 3, 10] }
+        meta: { title: 'cgstatistics', icon: 'cgstatistics', roles: [1, 3, 10] }
       },
       {
         path: 'cgkpimanage',
         name: 'cgkpimanage',
         component: () => import('@/views/tree/index'),
-        meta: { title: 'cgkpimanage', icon: 'cgkpimanage', role: [1, 3, 10] }
+        meta: { title: 'cgkpimanage', icon: 'cgkpimanage', roles: [1, 3, 10] }
       }
     ]
   },
   {
     path: '/function',
     component: Layout,
-    meta: { title: 'function', icon: 'function', role: [1, 3, 10] },
+    meta: { title: 'function', icon: 'function', roles: [1, 3, 10] },
     children: [
       {
         path: 'charge',
         name: 'charge',
         component: () => import('@/views/tree/index'),
-        meta: { title: 'charge', icon: 'charge', role: [1, 3, 10] }
+        meta: { title: 'charge', icon: 'charge', roles: [1, 3, 10] }
       },
       {
         path: 'check',
         name: 'check',
         component: () => import('@/views/tree/index'),
-        meta: { title: 'check', icon: 'check', role: [1, 3, 10] }
+        meta: { title: 'check', icon: 'check', roles: [1, 3, 10] }
       },
       {
         path: 'changepass',
         name: 'changepass',
         component: () => import('@/views/tree/index'),
-        meta: { title: 'changepass', icon: 'changepass', role: [1, 3, 10] }
+        meta: { title: 'changepass', icon: 'changepass', roles: [1, 3, 10] }
       }
     ]
   },

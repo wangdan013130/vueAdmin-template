@@ -26,7 +26,7 @@
     created() {
       // console.log(this.roles)
       // this.currentRole = 10
-      this.$store.dispatch('GetInfo')
+      // this.$store.dispatch('GetInfo')
       if (this.info.adminLevel === 1) {
         this.currentRole = 'memberDashboard'
       }/* else if(this.info.adminLevel === 3){
