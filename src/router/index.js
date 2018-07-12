@@ -26,17 +26,25 @@ import Layout from '../views/layout/Layout'
 export const constantRouterMap = [
   { path: '/login', component: () => import('@/views/login/index'), hidden: true },
   { path: '/findpass', component: () => import('@/views/login/findpass'), hidden: true },
-  { path: '/404', component: () => import('@/views/404'), hidden: true },
+  { path: '/404', component: () => import('@/views/404'), hidden: true }
+]
+export default new Router({
+  // mode: 'history', //后端支持可开
+  scrollBehavior: () => ({ y: 0 }),
+  routes: constantRouterMap
+})
 
+export const asyncRouterMap = [
   {
     path: '',
     component: Layout,
     redirect: 'dashboard',
+    meta: { role: [1, 3, 10] },
     children: [{
       path: 'dashboard',
       name: 'dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: 'dashboard', icon: 'dashboard', noCache: true }
+      meta: { title: 'dashboard', icon: 'dashboard', noCache: true, role: [1, 3, 10] }
     }]
   },
   {
@@ -47,104 +55,98 @@ export const constantRouterMap = [
       {
         path: 'hygl',
         name: 'hygl',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'hygl', icon: 'table' }
+        component: () => import('@/views/members/index'),
+        meta: { title: 'hygl', icon: 'table', role: [1, 3, 10] }
       },
       {
         path: 'rank',
         name: 'rank',
         component: () => import('@/views/tree/index'),
-        meta: { title: 'rank', icon: 'rank' }
+        meta: { title: 'rank', icon: 'rank', role: [1, 3, 10] }
       },
       {
         path: 'integrate',
         name: 'integrate',
         component: () => import('@/views/tree/index'),
-        meta: { title: 'integrate', icon: 'integrate' }
+        meta: { title: 'integrate', icon: 'integrate', role: [1, 3, 10] }
       },
       {
         path: 'examine',
         name: 'examine',
         component: () => import('@/views/tree/index'),
-        meta: { title: 'examine', icon: 'examine' }
+        meta: { title: 'examine', icon: 'examine', role: [1, 3, 10] }
       }
     ]
   },
   {
     path: '/user',
     component: Layout,
-    meta: { title: 'user', icon: 'user' },
+    meta: { title: 'user', icon: 'user', role: [1, 3, 10] },
     children: [
       {
         path: 'sale',
         name: 'sale',
         component: () => import('@/views/tree/index'),
-        meta: { title: 'sale', icon: 'sale' }
+        meta: { title: 'sale', icon: 'sale', role: [1, 3, 10] }
       },
       {
         path: 'userstatistics',
         name: 'userstatistics',
         component: () => import('@/views/tree/index'),
-        meta: { title: 'userstatistics', icon: 'userstatistics' }
+        meta: { title: 'userstatistics', icon: 'userstatistics', role: [1, 3, 10] }
       }
     ]
   },
   {
     path: '/cardgroup',
     component: Layout,
-    meta: { title: 'cardgroup', icon: 'cardgroup' },
+    meta: { title: 'cardgroup', icon: 'cardgroup', role: [1, 3, 10] },
     children: [
       {
         path: 'cgmanager',
         name: 'cgmanager',
         component: () => import('@/views/tree/index'),
-        meta: { title: 'cgmanager', icon: 'cgmanager' }
+        meta: { title: 'cgmanager', icon: 'cgmanager', role: [1, 3, 10] }
       },
       {
         path: 'cgstatistics',
         name: 'cgstatistics',
         component: () => import('@/views/tree/index'),
-        meta: { title: 'cgstatistics', icon: 'cgstatistics' }
+        meta: { title: 'cgstatistics', icon: 'cgstatistics', role: [1, 3, 10] }
       },
       {
         path: 'cgkpimanage',
         name: 'cgkpimanage',
         component: () => import('@/views/tree/index'),
-        meta: { title: 'cgkpimanage', icon: 'cgkpimanage' }
+        meta: { title: 'cgkpimanage', icon: 'cgkpimanage', role: [1, 3, 10] }
       }
     ]
   },
   {
     path: '/function',
     component: Layout,
-    meta: { title: 'function', icon: 'function' },
+    meta: { title: 'function', icon: 'function', role: [1, 3, 10] },
     children: [
       {
         path: 'charge',
         name: 'charge',
         component: () => import('@/views/tree/index'),
-        meta: { title: 'charge', icon: 'charge' }
+        meta: { title: 'charge', icon: 'charge', role: [1, 3, 10] }
       },
       {
         path: 'check',
         name: 'check',
         component: () => import('@/views/tree/index'),
-        meta: { title: 'check', icon: 'check' }
+        meta: { title: 'check', icon: 'check', role: [1, 3, 10] }
       },
       {
         path: 'changepass',
         name: 'changepass',
         component: () => import('@/views/tree/index'),
-        meta: { title: 'changepass', icon: 'changepass' }
+        meta: { title: 'changepass', icon: 'changepass', role: [1, 3, 10] }
       }
     ]
   },
   { path: '*', redirect: '/404', hidden: true }
 ]
-
-export default new Router({
-  // mode: 'history', //后端支持可开
-  scrollBehavior: () => ({ y: 0 }),
-  routes: constantRouterMap
-})
 
