@@ -1,6 +1,7 @@
 <template>
     <el-table 
-    :data="list" v-loading.body="listLoading" size="mini" element-loading-text="Loading" border fit highlight-current-row
+    :data="list" v-loading.body="listLoading" size="mini" element-loading-text="Loading" 
+    height="600" border fit highlight-current-row
     :default-sort = "{prop: 'mTime', order: 'descending'}">
     <el-table-column fixed align="center" prop='index' label='序号' width="80">
         <template slot-scope="scope">
@@ -36,27 +37,27 @@
           <span>{{scope.row.money}}</span>
         </template>
       </el-table-column>
-      <el-table-column sortable align="center" prop="gold" label="金卡数量" width="120">
+      <el-table-column v-if="switches.goldynSwitch" sortable align="center" prop="gold" label="金卡数量" width="120">
         <template slot-scope="scope">
           <span>{{scope.row.gold}}</span>
         </template>
       </el-table-column>
-      <el-table-column sortable align="center" prop="buyTotal" label="本周购买" width="120">
+      <el-table-column v-if="switches.rebateBaseOneSwitch" sortable align="center" prop="buyTotal" label="本周购买" width="120">
         <template slot-scope="scope">
           <span>{{scope.row.buyTotal}}</span>
         </template>
       </el-table-column>
-      <el-table-column sortable align="center" prop="buyReward" label="未领返利" width="120">
+      <el-table-column v-if="switches.rebateBaseOneSwitch" sortable align="center" prop="buyReward" label="未领返利" width="120">
         <template slot-scope="scope">
           <span>{{scope.row.buyReward}}</span>
         </template>
       </el-table-column>
-      <el-table-column sortable align="center" prop="rebateTotal" label="本期购买-元" width="140">
+      <el-table-column v-if="switches.rebateSwitch" sortable align="center" prop="rebateTotal" label="本期购买-元" width="140">
         <template slot-scope="scope">
           <span>{{scope.row.rebateTotal}}</span>
         </template>
       </el-table-column>
-      <el-table-column sortable align="center" prop="rebateReward" label="未领返利" width="120">
+      <el-table-column v-if="switches.rebateSwitch" sortable align="center" prop="rebateReward" label="未领返利" width="120">
         <template slot-scope="scope">
           <span>{{scope.row.rebateReward}}</span>
         </template>
@@ -71,7 +72,7 @@
           <span>{{scope.row.mAddByMid}}</span>
         </template>
       </el-table-column>
-      <el-table-column sortable align="center" prop="mAddByTime" label="推荐时间" width="140">
+      <el-table-column v-if="switches.rebateSwitch" sortable align="center" prop="mAddByTime" label="推荐时间" width="140">
         <template slot-scope="scope">
           <span>{{scope.row.mAddByTime}}</span>
         </template>
@@ -81,7 +82,7 @@
           <span>{{scope.row.byMid}}</span>
         </template>
       </el-table-column>
-      <el-table-column sortable align="center" prop="mTime" label="注册时间" width="120">
+      <el-table-column sortable align="center" prop="mTime" label="注册时间" width="120" formatter:timetransform>
         <template slot-scope="scope">
           <span>{{scope.row.mTime}}</span>
         </template>
@@ -121,15 +122,19 @@ export default {
   data() {
     return {
       list: null,
-      listLoading: true
+      listLoading: true,
+      switches: {}
     }
   },
   created() {
+    // console.log(this.$root.$allSwitch)
     this.fetchData()
   },
   methods: {
+    getswitches() {
+      this.switches = this.$root.$allSwitch
+    },
     fetchData() {
-      console.log(this.allSwitch)
       this.listLoading = true
       const timestamp = new Date().getTime() + 3500 * 24 * 60 * 60 * 1000
       const msg = {}
@@ -142,6 +147,10 @@ export default {
         this.list = response.data.rows
         this.listLoading = false
       })
+    },
+    timetransform(row, column) {
+      console.log(new Date(row.mTime).getTime())
+      return new Date(row.mTime).getTime()
     }
   }
 }

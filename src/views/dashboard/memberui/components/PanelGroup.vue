@@ -12,7 +12,7 @@
             <ul class="userinfolist">
               <li>ID:{{info.mid}}</li>
               <li>钻石余额:{{info.money}}</li>
-              <li >金卡余额:{{info.gold}}</li>
+              <li v-if="switches.goldynSwitch">金卡余额:{{info.gold}}</li>
             </ul>
           </div>
         </el-card>
@@ -41,15 +41,16 @@ export default {
   },
   data() {
     return {
-      notice: ''
+      notice: '',
+      switches: {}
     }
   },
   computed: {
     imgurl() {
       // const gameid = window.location.href.split('.')
       let common = 'avatar.png'
-      if (this.GAMETYPE['git'] != null && this.GAMETYPE['git']['loginImg']) {
-        common = this.GAMETYPE['git']['loginImg']
+      if (this.$GAMETYPE['git'] != null && this.$GAMETYPE['git']['loginImg']) {
+        common = this.$GAMETYPE['git']['loginImg']
       }
       const ret = require('@/assets/producticon/' + common)
       return ret
@@ -65,6 +66,11 @@ export default {
       this.$message.error('公告未能成功获取')
       return false
     })
+  },
+  methods: {
+    getswitches() {
+      this.switches = this.$root.$allSwitch
+    }
   }
 }
 

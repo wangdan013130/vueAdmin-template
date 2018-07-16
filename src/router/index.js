@@ -39,7 +39,6 @@ export const asyncRouterMap = [
     path: '',
     component: Layout,
     redirect: 'dashboard',
-    meta: { roles: [1, 3, 10] },
     children: [{
       path: 'dashboard',
       name: 'dashboard',
@@ -50,6 +49,8 @@ export const asyncRouterMap = [
   {
     path: '/members',
     component: Layout,
+    redirect: 'hygl',
+    name: 'members',
     meta: { title: 'members', icon: 'members' },
     children: [
       {
