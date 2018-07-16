@@ -82,10 +82,8 @@
           <span>{{scope.row.byMid}}</span>
         </template>
       </el-table-column>
-      <el-table-column sortable align="center" prop="mTime" label="注册时间" width="120" formatter:timetransform>
-        <template slot-scope="scope">
-          <span>{{scope.row.mTime}}</span>
-        </template>
+      <el-table-column sortable align="center" prop="mTime" label="注册时间" width="120" :formatter="timetransform">
+        
       </el-table-column>
       <el-table-column sortable align="center" prop="lastBuyDay" label="最后充值时间" width="140">
         <template slot-scope="scope">
@@ -117,6 +115,7 @@
 
 <script>
 import { getmembers } from '@/api/members'
+import { parseTime } from '@/utils/time'
 
 export default {
   data() {
@@ -150,7 +149,7 @@ export default {
     },
     timetransform(row, column) {
       console.log(new Date(row.mTime).getTime())
-      return new Date(row.mTime).getTime()
+      return parseTime(new Date(row.mTime).getTime(), '{y}-{m}-{d} {h}:{i}:{s}')
     }
   }
 }
