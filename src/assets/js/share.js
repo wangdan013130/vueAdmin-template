@@ -2891,4 +2891,5 @@ const gameType= {
         }
     }
 }
-export default gameType
+const allSwitch = {}
+export { gameType, allSwitch } 

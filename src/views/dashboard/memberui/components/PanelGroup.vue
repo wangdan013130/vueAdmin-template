@@ -12,7 +12,7 @@
             <ul class="userinfolist">
               <li>ID:{{info.mid}}</li>
               <li>钻石余额:{{info.money}}</li>
-              <li>金卡余额:{{info.gold}}</li>
+              <li >金卡余额:{{info.gold}}</li>
             </ul>
           </div>
         </el-card>

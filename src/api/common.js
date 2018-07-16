@@ -8,11 +8,10 @@ export function getnotice() {
   })
 }
 
-export function getmembers() {
+export function getAllSwitch() {
   return request({
-    url: '/api/admin/getMembers',
+    url: '/api/switch/getAllSwitch',
     method: 'post',
     data: {}
   })
 }
-

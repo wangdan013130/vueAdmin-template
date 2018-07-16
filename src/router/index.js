@@ -36,7 +36,7 @@ export default new Router({
 
 export const asyncRouterMap = [
   {
-    path: '/',
+    path: '',
     component: Layout,
     redirect: 'dashboard',
     meta: { roles: [1, 3, 10] },
@@ -44,7 +44,7 @@ export const asyncRouterMap = [
       path: 'dashboard',
       name: 'dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: 'dashboard', icon: 'dashboard', noCache: true, roles: [1, 3, 10] }
+      meta: { title: 'dashboard', icon: 'dashboard', roles: [1, 3, 10] }
     }]
   },
   {
@@ -55,7 +55,7 @@ export const asyncRouterMap = [
       {
         path: 'hygl',
         name: 'hygl',
-        component: () => import('@/views/members/index'),
+        component: () => import('@/views/members/hygl/index'),
         meta: { title: 'hygl', icon: 'table', roles: [1, 3, 10] }
       },
       {

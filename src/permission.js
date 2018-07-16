@@ -8,6 +8,7 @@ import { Message } from 'element-ui'
 const whiteList = ['/login', '/findpass'] // 不重定向白名单
 router.beforeEach((to, from, next) => {
   NProgress.start()
+  // console.log(store.getters.token)
   if (store.getters.token) {
     if (to.path === '/login') {
       next({ path: '/' })
@@ -16,11 +17,8 @@ router.beforeEach((to, from, next) => {
       if (store.getters.info.adminLevel === 0) {
         store.dispatch('GetInfo').then(res => { // 拉取info
           const adminLevel = res.data.adminLevel
-          // console.log(adminLevel)
           store.dispatch('GenerateRoutes', { adminLevel }).then(() => { // 生成可访问的路由表
-            // console.log(store.getters.addRouters)
             router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表
-            // console.log(router)
             next({ ...to, replace: true }) // hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record
           })
         }).catch(err => {
