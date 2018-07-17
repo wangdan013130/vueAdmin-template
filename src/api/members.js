@@ -7,3 +7,11 @@ export function getmembers(para) {
     data: para
   })
 }
+
+export function getmembersCount(para) {
+  return request({
+    url: '/api/admin/getMembersCount',
+    method: 'post',
+    data: para
+  })
+}
