@@ -5,7 +5,7 @@
           <el-option @click.native="handleFilter" v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key">
           </el-option>
         </el-select>
-        <search-bar  :searchkeys="searchkeyslist" @searchVal="getSearchData"></search-bar>
+        <search-bar  :searchkeys="getSelOption" @searchVal="getSearchData"></search-bar>
       </div>
       <el-table class="el-table"
       :data="list" v-loading.body="listLoading" size="mini" element-loading-text="Loading" 
@@ -104,9 +104,14 @@
         </el-table-column>
         <el-table-column sortable align="left" prop="mLastSellTime" label="最后售钻时间" width="90" :formatter="timetransform">
         </el-table-column>
+        <el-table-column align="center" prop="mMoneyLevel" label="钻石权限" width="80">
+          <template slot-scope="scope">      
+            <span>{{scope.row.mMoneyLevel ? "开启" : "关闭"}}</span>
+          </template>
+        </el-table-column>
         <el-table-column v-if="switches.goldynSwitch" align="center" prop="mGoldLevel" label="金卡权限" width="80">
           <template slot-scope="scope">      
-            <span>{{scope.row.mGoldLevel}}</span>
+            <span>{{scope.row.mGoldLevel ? "开启" : "关闭"}}</span>
           </template>
         </el-table-column>
         <el-table-column align="center" prop="gameids" label="gameids" width="100">
@@ -193,6 +198,12 @@ export default {
       }, {
         key: 'mTime',
         label: '注册时间'
+      }, {
+        key: 'mMoneyLevel',
+        label: '有钻石权限'
+      }, {
+        key: 'mGoldLevel',
+        label: '有金卡权限'
       }
       ]
     }
@@ -271,13 +282,25 @@ export default {
         para[1] = parseInt(para[1])
       }
       const msg = {}
-      msg[para[0]] = para[1]
+      if (para[0] === 'mGoldLevel' || para[0] === 'mMoneyLevel') {
+        msg[para[0]] = 1
+      } else {
+        msg[para[0]] = para[1]
+      }
       if (!this.searchKey) {
         this.searchKey = {}
       }
       this.searchKey = msg
       this.currentPage = 1
       this.fetchData()
+    }
+  },
+  computed: {
+    getSelOption: function() {
+      if (!this.$root.$allSwitch.goldynSwitch) {
+        this.searchkeyslist.splice(-1, 1)
+      }
+      return this.searchkeyslist
     }
   }
 }
