@@ -1,11 +1,11 @@
 <template>
   <div class="app-container">
      <div class="filter-container">
-        <el-select size="mini" @change='handleFilter' style="width:140px" class="filter-item" v-model="blockAccount">
-          <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key">
+        <el-select size="mini" @change="handleFilter" style="width:140px" class="filter-item" v-model="blockAccount">
+          <el-option @click.native="handleFilter" v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key">
           </el-option>
         </el-select>
-        <search-bar :searchKey="keys" :searchVal="searchVal" :searchkeys="searchkeyslist" @searchVal="getSearchData"></search-bar>
+        <search-bar  :searchkeys="searchkeyslist" @searchVal="getSearchData"></search-bar>
       </div>
       <el-table class="el-table"
       :data="list" v-loading.body="listLoading" size="mini" element-loading-text="Loading" 
@@ -145,6 +145,7 @@ export default {
       pageSize: 20,
       total: 0,
       blockAccount: '1',
+      filterFlag: 0,
       searchKey: {},
       sortOptions: [{
         key: '1',
@@ -153,8 +154,6 @@ export default {
         key: '2',
         label: '查看被删除账号'
       }],
-      keys: 'mid',
-      searchVal: '',
       searchkeyslist: [{
         key: 'mid',
         label: '用户ID'
@@ -220,6 +219,9 @@ export default {
       getmembers(msg).then(response => {
         this.list = response.data.rows
         this.listLoading = false
+        if (this.filterFlag === 1) {
+          this.total = this.list.length
+        }
       })
     },
     timetransform(row, column, cellValue) {
@@ -248,17 +250,34 @@ export default {
       this.fetchData()
     },
     handleFilter() {
-      // console.log(this.blockAccount)
+      // console.log('mmmmmmm')
+      this.filterFlag = 0
       this.currentPage = 1
       // console.log(this.pageSize)
+      this.searchKey = {}
+      if (parseInt(this.blockAccount) === 2) {
+        this.searchKey.banTime = { '$gte': TIMESTAMP }
+      } else {
+        this.searchKey.banTime = { '$lt': TIMESTAMP }
+      }
       this.fetchData()
       this.getAllcount()
     },
-    getSearchData(para) {
+    getSearchData(...para) {
+      // console.log(para[0])
+      // console.log(para[1])
+      this.filterFlag = 1
+      if (para[0] === 'mid' || para[0] === 'lastBuyDay' || para[0] === 'money' || para[0] === 'mAddByMid' || para[0] === 'byMid' || para[0] === 'buyTotal' || para[0] === 'buyReward') {
+        para[1] = parseInt(para[1])
+      }
+      const msg = {}
+      msg[para[0]] = para[1]
       if (!this.searchKey) {
         this.searchKey = {}
       }
-      this.searchKey = para
+      this.searchKey = msg
+      this.currentPage = 1
+      this.fetchData()
     }
   }
 }
