@@ -18,7 +18,6 @@ import { gameType, allSwitch } from '@/assets/js/share' // permission control
 Vue.prototype.$GAMETYPE = gameType
 Vue.prototype.$allSwitch = allSwitch
 Vue.use(ElementUI)
-
 Vue.config.productionTip = false
 
 new Vue({

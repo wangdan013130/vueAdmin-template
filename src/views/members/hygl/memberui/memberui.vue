@@ -6,7 +6,9 @@
           </el-option>
         </el-select>
         <search-bar  :searchkeys="getSelOption" @searchVal="getSearchData"></search-bar>
+        <el-button class="filter-item" size="mini" style="margin-left: 10px;" @click="handleCreate" type="primary" icon="el-icon-edit">添加会员</el-button>
       </div>
+      <addmem-dia :dialogFormVisible="isOpenaddMemDia" ref="addmethod"></addmem-dia>
       <el-table class="el-table"
       :data="list" v-loading.body="listLoading" size="mini" element-loading-text="Loading" 
       max-height=600 border fit highlight-current-row
@@ -136,10 +138,11 @@
 import { getmembers, getmembersCount } from '@/api/members'
 import { parseTime } from '@/utils/time'
 import SearchBar from '@/components/SearchBar'
+import AddmemDia from '../components/AddmemDia'
 const TIMESTAMP = new Date().getTime() + 3500 * 24 * 60 * 60 * 1000
 export default {
   name: 'members',
-  components: { SearchBar },
+  components: { SearchBar, AddmemDia },
   data() {
     return {
       list: [],
@@ -152,6 +155,8 @@ export default {
       blockAccount: '1',
       filterFlag: 0,
       searchKey: {},
+      addMemFlag: true,
+      isOpenaddMemDia: false,
       sortOptions: [{
         key: '1',
         label: '查看使用账号'
@@ -293,6 +298,25 @@ export default {
       this.searchKey = msg
       this.currentPage = 1
       this.fetchData()
+    },
+    resetTemp() {
+      this.temp = {
+        id: undefined,
+        importance: 1,
+        remark: '',
+        timestamp: new Date(),
+        title: '',
+        status: 'published',
+        type: ''
+      }
+    },
+    handleCreate() {
+      this.addMemFlag = true
+      this.isOpenaddMemDia = true
+      this.$refs['addmethod'].setTit(1)
+      this.$nextTick(() => {
+        this.$refs['addmethod'].resetForm()
+      })
     }
   },
   computed: {

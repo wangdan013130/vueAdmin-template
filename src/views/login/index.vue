@@ -36,14 +36,14 @@
 </template>
 
 <script>
-import { isvalidUsername } from '@/utils/validate'
+import { isvalidContent } from '@/utils/validate'
 
 export default {
   /* eslint-disable */
   name: 'login',
   data() {
     const validateUsername = (rule, value, callback) => {
-      if (!isvalidUsername(value)) {
+      if (!isvalidContent(value)) {
         callback(new Error('请输入正确的用户ID'))
       } else {
         callback()

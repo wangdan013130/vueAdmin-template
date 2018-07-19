@@ -2,7 +2,7 @@
  * Created by jiachenpan on 16/11/18.
  */
 
-export function isvalidUsername(str) {
+export function isvalidContent(str) {
   // const valid_map = ['admin', 'editor']
   return str
 }

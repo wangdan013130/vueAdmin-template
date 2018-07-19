@@ -15,3 +15,11 @@ export function getmembersCount(para) {
     data: para
   })
 }
+
+export function addmembersYes(url, para) {
+  return request({
+    url: url,
+    method: 'post',
+    data: para
+  })
+}
