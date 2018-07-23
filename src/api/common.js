@@ -15,3 +15,10 @@ export function getAllSwitch() {
     data: {}
   })
 }
+
+export function getAreaData() {
+  return request({
+    url: '/api/area',
+    method: 'get'
+  })
+}

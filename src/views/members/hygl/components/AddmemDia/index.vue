@@ -11,18 +11,16 @@
                 <el-input v-model="form.mName" auto-complete="off"></el-input>
             </el-form-item>
             <el-form-item label="省市区">
-                <address-sel></address-sel>
+                <address-sel @setBaseAddr="setBaseAddr"></address-sel>
+            </el-form-item>    
             <el-form-item label="详细地址">
-                 <el-input v-model="form.mAddress" auto-complete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="地址">
-                 <el-input v-model="form.mAddress" auto-complete="off"></el-input>
+                 <el-input v-model="address" auto-complete="off"></el-input>
             </el-form-item>
             <el-form-item v-if="isbindphone" label="手机号">
-                <el-input v-model="form.memberBindPhone" auto-complete="off"></el-input>
+                <tel-sel></tel-sel>
             </el-form-item>
             <el-form-item v-if="goldSwitch" label="代理货币">
-                <el-checkbox-group v-model="form.money">
+                <el-checkbox-group v-model="money">
                     <el-checkbox label="金币" name="money"></el-checkbox>
                     <el-checkbox label="金卡" name="money"></el-checkbox>
                 </el-checkbox-group>
@@ -38,9 +36,10 @@
 import { addmembersYes } from '@/api/members'
 import { isvalidContent } from '@/utils/validate'
 import AddressSel from '@/components/AddressSel'
+import TelSel from '@/components/TelSel'
 export default {
   name: 'AddmemDia',
-  components: { AddressSel },
+  components: { AddressSel, TelSel },
   data() {
     const validateContent = (rule, value, callback) => {
       if (!isvalidContent(value)) {
@@ -55,18 +54,20 @@ export default {
         mwxId: '',
         mName: '',
         mAddress: '',
-        memberBindPhone: '',
-        money: []
+        mPhone: ''
       },
       memberRules: {
         mNick: [{ required: true, trigger: 'blur', validator: validateContent }],
         mwxId: [{ required: true, trigger: 'blur', validator: validateContent }],
         mName: [{ required: true, trigger: 'blur', validator: validateContent }],
-        mAddress: [{ required: true, trigger: 'blur', validator: validateContent }],
-        memberBindPhone: [{ trigger: 'blur', validator: validateContent }]
+        mPhone: [{ trigger: 'blur', validator: validateContent }]
       },
       tit: '',
-      labelPosition: 'left'
+      labelPosition: 'left',
+      baseAddr: '',
+      address: '',
+      addFlag: 0,
+      money: []
     }
   },
   props: {
@@ -78,7 +79,17 @@ export default {
   },
   methods: {
     addMemYes() {
-      addmembersYes().then(response => {
+      this.form.mAddress = this.baseAddr + this.address
+      const para = {}
+      let url = ''
+      if (this.addFlag) {
+        url = '/api/admin/addMember'
+        para.mid = null
+      } else {
+        url = '/api/admin/saveMember'
+        para.mid = []
+      }
+      addmembersYes(url, para).then(response => {
         // this.total = response.data
         // this.$emit('refreshUI')
       })
@@ -95,10 +106,17 @@ export default {
     },
     setTit(para) {
       if (para) {
+        this.addFlag = 1
         this.tit = '添加会员'
+      } else {
+        this.addFlag = 0
+        this.tit = '修改会员'
       }
-      this.tit = '修改会员'
-      console.log(this.tit)
+    },
+    setBaseAddr(...para) {
+      // console.log('aaa')
+      // console.log(para)
+      this.baseAddr = para[0].split(',').join()
     }
   },
   computed: {
@@ -111,6 +129,10 @@ export default {
     },
     goldSwitch() {
       return this.$root.$allSwitch.goldynSwitch
+    },
+    getMaddress() {
+      this.form.mAddress = this.baseAddr + this.address
+      return this.form.mAddress
     }
   }
 }

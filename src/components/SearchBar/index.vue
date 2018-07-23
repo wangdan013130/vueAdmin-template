@@ -1,8 +1,10 @@
 <template>
     <div class="app-searchbar">
-        <el-select
+        <el-input size="mini" placeholder="请输入查询值" v-model="searchVal">
+            <el-select
             size="mini"
-            style="width:120px"
+            style="width:110px"
+            slot="prepend"
             v-model="searchKey">
                 <el-option
                     v-for="item in searchkeys"
@@ -10,10 +12,9 @@
                     :label="item.label"
                     :value="item.key">
                 </el-option>
-        </el-select>
-        <el-input size="mini" style="width:120px;" placeholder="请输入查询值" v-model="searchVal">
+            </el-select>
+            <el-button  slot="append" type="primary" size="mini" icon="el-icon-search" @click="handleFilter(searchKey,searchVal)">搜索</el-button>
         </el-input>
-        <el-button  type="primary" size="mini" icon="el-icon-search" @click="handleFilter(searchKey,searchVal)">搜索</el-button>
     </div>
 </template>
 <script>
@@ -46,5 +47,6 @@ export default {
 <style rel="stylesheet/scss" lang="scss" scoped>
   .app-searchbar {
     display: inline-block;
+    width:100%
   }
 </style>

@@ -1,12 +1,22 @@
 <template>
   <div class="app-container">
      <div class="filter-container">
-        <el-select size="mini" @change="handleFilter" style="width:140px" class="filter-item" v-model="blockAccount">
-          <el-option @click.native="handleFilter" v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key">
-          </el-option>
-        </el-select>
-        <search-bar  :searchkeys="getSelOption" @searchVal="getSearchData"></search-bar>
-        <el-button class="filter-item" size="mini" style="margin-left: 10px;" @click="handleCreate" type="primary" icon="el-icon-edit">添加会员</el-button>
+       <el-row>
+          <el-col :xs="24" :sm="18" :md="8" :lg="6" :xl="6">
+              <search-bar  :searchkeys="getSelOption" @searchVal="getSearchData"></search-bar>
+          </el-col> 
+          <el-col :xs="12" :sm="8" :md="3" :lg="3" :xl="3">
+            <el-select size="mini" @change="handleFilter" style="width:140px" class="filter-item" v-model="blockAccount">
+              <el-option @click.native="handleFilter" v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key">
+              </el-option>
+            </el-select>
+          </el-col>
+          <el-col :xs="4" :md="3" :lg="3" :xl="1">
+            <el-button class="filter-item" size="mini" style="margin-left: 10px;" @click="handleCreate" type="primary" icon="el-icon-edit">
+              添加会员
+            </el-button>
+          </el-col>
+       </el-row>
       </div>
       <addmem-dia :dialogFormVisible="isOpenaddMemDia" ref="addmethod"></addmem-dia>
       <el-table class="el-table"
@@ -299,17 +309,6 @@ export default {
       this.currentPage = 1
       this.fetchData()
     },
-    resetTemp() {
-      this.temp = {
-        id: undefined,
-        importance: 1,
-        remark: '',
-        timestamp: new Date(),
-        title: '',
-        status: 'published',
-        type: ''
-      }
-    },
     handleCreate() {
       this.addMemFlag = true
       this.isOpenaddMemDia = true
@@ -335,5 +334,8 @@ export default {
 }
 .el-table {
   margin: 15px 0 5px;
+}
+.el-row{
+  margin-bottom: 5px;
 }
 </style>
