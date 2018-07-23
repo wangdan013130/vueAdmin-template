@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-input v-model="phone" name="phone" type="text"  autoComplete="off" placeholder="输入手机号">
+    <el-input v-model="phone" name="phone" type="text"  autoComplete="off" placeholder="输入手机号" @blur="selTel">
       <el-select class="el-select" slot="prepend" v-model="areano" filterable placeholder="选择区号">
         <el-option
           v-for="item in areaData"
@@ -24,7 +24,10 @@
       }
     },
     methods: {
-
+      selTel() {
+        // console.log(this.areano, this.phone)
+        this.$emit('setMphone', this.areano, this.phone)
+      }
     },
     created: function() {
       getAreaData().then(response => {

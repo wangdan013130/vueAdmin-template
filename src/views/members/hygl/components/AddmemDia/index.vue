@@ -1,5 +1,5 @@
 <template>
-    <el-dialog :title=tit :visible.sync="dialogFormVisible">
+    <el-dialog :title=tit :visible.sync="dialogFormVisible" :before-close="closeDia">
         <el-form :model="form" :rules="memberRules" :label-position="labelPosition" label-width="80px">
             <el-form-item label="微信昵称">
                 <el-input v-model="form.mNick" auto-complete="off"></el-input>
@@ -17,7 +17,7 @@
                  <el-input v-model="address" auto-complete="off"></el-input>
             </el-form-item>
             <el-form-item v-if="isbindphone" label="手机号">
-                <tel-sel></tel-sel>
+                <tel-sel @setMphone="setMphone"></tel-sel>
             </el-form-item>
             <el-form-item v-if="goldSwitch" label="代理货币">
                 <el-checkbox-group v-model="money">
@@ -27,7 +27,7 @@
             </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
-            <el-button @click="dialogFormVisible = false">取 消</el-button>
+            <el-button @click="closeDia">取 消</el-button>
             <el-button type="primary" @click="addMemYes">确 定</el-button>
         </div>
     </el-dialog>
@@ -54,20 +54,21 @@ export default {
         mwxId: '',
         mName: '',
         mAddress: '',
+        mCountryCode: '86',
         mPhone: ''
       },
       memberRules: {
         mNick: [{ required: true, trigger: 'blur', validator: validateContent }],
         mwxId: [{ required: true, trigger: 'blur', validator: validateContent }],
-        mName: [{ required: true, trigger: 'blur', validator: validateContent }],
-        mPhone: [{ trigger: 'blur', validator: validateContent }]
+        mName: [{ required: true, trigger: 'blur', validator: validateContent }]
       },
       tit: '',
       labelPosition: 'left',
       baseAddr: '',
       address: '',
       addFlag: 0,
-      money: []
+      money: [],
+      formVisible: this.initialCounter
     }
   },
   props: {
@@ -89,9 +90,31 @@ export default {
         url = '/api/admin/saveMember'
         para.mid = []
       }
+
+      if (this.isbindphone) {
+        para.mCountryCode = parseInt(this.form.mCountryCode)
+        para.mPhone = parseInt(this.form.mPhone)
+      }
+      para.mNick = this.form.mNick
+      para.mwxId = this.form.mwxId
+      para.mName = this.form.mName
+      para.mAddress = this.form.mAddress
+
       addmembersYes(url, para).then(response => {
         // this.total = response.data
         // this.$emit('refreshUI')
+        console.log(response.data)
+        const rtn = response.data
+        if (!rtn.errno) {
+          this.$message({
+            message: '添加成功',
+            type: 'success'
+          })
+          this.$emit('refreshUI')
+          this.$emit('closeAddDia')
+        } else {
+          this.$message.error(rtn.errmsg)
+        }
       })
     },
     resetForm() {
@@ -100,8 +123,8 @@ export default {
         mwxId: '',
         mName: '',
         mAddress: '',
-        memberBindPhone: '',
-        money: []
+        mCountryCode: '86',
+        mPhone: ''
       }
     },
     setTit(para) {
@@ -117,6 +140,15 @@ export default {
       // console.log('aaa')
       // console.log(para)
       this.baseAddr = para[0].split(',').join()
+    },
+    setMphone(...para) {
+      this.form.mCountryCode = para[0]
+      this.form.mPhone = para[1]
+      // console.log(para[0])
+      // console.log(para[1])
+    },
+    closeDia() {
+      this.$emit('closeAddDia')
     }
   },
   computed: {

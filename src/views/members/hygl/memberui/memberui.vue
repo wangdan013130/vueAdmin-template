@@ -2,23 +2,23 @@
   <div class="app-container">
      <div class="filter-container">
        <el-row>
-          <el-col :xs="24" :sm="18" :md="8" :lg="6" :xl="6">
+          <el-col :xs="18" :sm="18" :md="10" :lg="6" :xl="6">
               <search-bar  :searchkeys="getSelOption" @searchVal="getSearchData"></search-bar>
           </el-col> 
-          <el-col :xs="12" :sm="8" :md="3" :lg="3" :xl="3">
+          <el-col :xs="6" :sm="6" :md="4" :lg="3" :xl="3">
             <el-select size="mini" @change="handleFilter" style="width:140px" class="filter-item" v-model="blockAccount">
               <el-option @click.native="handleFilter" v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key">
               </el-option>
             </el-select>
           </el-col>
-          <el-col :xs="4" :md="3" :lg="3" :xl="1">
+          <el-col :md="10" :lg="15" :xl="15">
             <el-button class="filter-item" size="mini" style="margin-left: 10px;" @click="handleCreate" type="primary" icon="el-icon-edit">
               添加会员
             </el-button>
           </el-col>
        </el-row>
       </div>
-      <addmem-dia :dialogFormVisible="isOpenaddMemDia" ref="addmethod"></addmem-dia>
+      <addmem-dia :dialogFormVisible="isOpenaddMemDia" @refreshUI="refreshUI" @closeAddDia="closeAddDia" ref="addmethod"></addmem-dia>
       <el-table class="el-table"
       :data="list" v-loading.body="listLoading" size="mini" element-loading-text="Loading" 
       max-height=600 border fit highlight-current-row
@@ -224,10 +224,13 @@ export default {
     }
   },
   created() {
-    this.fetchData()
-    this.getAllcount()
+    this.refreshUI()
   },
   methods: {
+    refreshUI() {
+      this.fetchData()
+      this.getAllcount()
+    },
     getswitches() {
       this.switches = this.$root.$allSwitch
     },
@@ -313,6 +316,13 @@ export default {
       this.addMemFlag = true
       this.isOpenaddMemDia = true
       this.$refs['addmethod'].setTit(1)
+      this.$nextTick(() => {
+        this.$refs['addmethod'].resetForm()
+      })
+    },
+    closeAddDia() {
+      this.isOpenaddMemDia = false
+      this.addMemFlag = false
       this.$nextTick(() => {
         this.$refs['addmethod'].resetForm()
       })
