@@ -23,3 +23,27 @@ export function addmembersYes(url, para) {
     data: para
   })
 }
+
+export function setmemMoney(para) {
+  return request({
+    url: '/api/memberData/setMemberMoneyLevel',
+    method: 'post',
+    data: para
+  })
+}
+
+export function setmemGold(para) {
+  return request({
+    url: '/api/memberData/setMemberGoldLevel',
+    method: 'post',
+    data: para
+  })
+}
+
+export function getMoneylog(para) {
+  return request({
+    url: '/api/newMember/getMemberCurrency',
+    method: 'post',
+    data: para
+  })
+}

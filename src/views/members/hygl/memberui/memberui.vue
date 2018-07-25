@@ -12,13 +12,14 @@
             </el-select>
           </el-col>
           <el-col :md="10" :lg="15" :xl="15">
-            <el-button class="filter-item" size="mini" style="margin-left: 10px;" @click="handleCreate" type="primary" icon="el-icon-edit">
+            <el-button class="filter-item" size="mini" @click="handleCreate" type="primary" icon="el-icon-edit">
               添加会员
             </el-button>
           </el-col>
        </el-row>
       </div>
       <addmem-dia :dialogFormVisible="isOpenaddMemDia" @refreshUI="refreshUI" @closeAddDia="closeAddDia" ref="addmethod"></addmem-dia>
+      <moneylog-dia :moneylogVisble="isOpenMoneylogDia" @closeAddDia="closeMonlogDia" ref="moneyLog" class="stylewid"></moneylog-dia>
       <el-table class="el-table"
       :data="list" v-loading.body="listLoading" size="mini" element-loading-text="Loading" 
       max-height=600 border fit highlight-current-row
@@ -116,8 +117,8 @@
         </el-table-column>
         <el-table-column sortable align="left" prop="mLastSellTime" label="最后售钻时间" width="90" :formatter="timetransform">
         </el-table-column>
-        <el-table-column align="center" prop="mMoneyLevel" label="钻石权限" width="80">
-          <template slot-scope="scope">      
+        <el-table-column prop="mMoneyLevel" align="center" label="钻石权限" width="80">
+          <template slot-scope="scope">
             <span>{{scope.row.mMoneyLevel ? "开启" : "关闭"}}</span>
           </template>
         </el-table-column>
@@ -131,6 +132,23 @@
             <span>{{scope.row.gameids}}</span>
           </template>
         </el-table-column>
+        <el-table-column align="center" label="操作" width="150">
+          <template slot-scope="scope">
+            <el-dropdown size="mini" type="primary">
+            <el-button type="primary" size="mini">
+              操作／查询<i class="el-icon-arrow-down el-icon--right"></i>
+            </el-button>   
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item @click.native="setDia(scope.row)" v-if="scope.row.mMoneyLevel">关闭钻石权限</el-dropdown-item>
+              <el-dropdown-item @click.native="setDia(scope.row)" v-else>开启钻石权限</el-dropdown-item>
+              <el-dropdown-item @click.native="setGold(scope.row)" v-if="switches.goldynSwitch && scope.row.mGoldLevel" divided>关闭金卡权限</el-dropdown-item>
+              <el-dropdown-item @click.native="setGold(scope.row)" v-else-if="switches.goldynSwitch && (!scope.row.mGoldLevel)" divided>开启金卡权限</el-dropdown-item>
+              <el-dropdown-item @click.native="searchMoneyLog(scope.row)" divided>货币记录</el-dropdown-item>
+              <el-dropdown-item @click.native="searchUsercus(scope.row)" divided>玩家消耗明细</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+          </template>
+       </el-table-column>
       </el-table>
       <el-pagination
         @size-change="handleSizeChange"
@@ -145,14 +163,15 @@
 </template>
 
 <script>
-import { getmembers, getmembersCount } from '@/api/members'
+import { getmembers, getmembersCount, setmemMoney, setmemGold } from '@/api/members'
 import { parseTime } from '@/utils/time'
 import SearchBar from '@/components/SearchBar'
 import AddmemDia from '../components/AddmemDia'
+import MoneylogDia from '../components/MoneylogDia'
 const TIMESTAMP = new Date().getTime() + 3500 * 24 * 60 * 60 * 1000
 export default {
   name: 'members',
-  components: { SearchBar, AddmemDia },
+  components: { SearchBar, AddmemDia, MoneylogDia },
   data() {
     return {
       list: [],
@@ -167,6 +186,7 @@ export default {
       searchKey: {},
       addMemFlag: true,
       isOpenaddMemDia: false,
+      isOpenMoneylogDia: false,
       sortOptions: [{
         key: '1',
         label: '查看使用账号'
@@ -326,6 +346,62 @@ export default {
       this.$nextTick(() => {
         this.$refs['addmethod'].resetForm()
       })
+    },
+    setDia(row) {
+      var para = {}
+      para.mid = row.mid
+      if (row.mMoneyLevel === 1) {
+        para.mMoneyLevel = 0
+      } else {
+        para.mMoneyLevel = 1
+      }
+      setmemMoney(para).then(response => {
+        // console.log(response.data)
+        if (!response.data.errno) {
+          this.$message({
+            message: '权限修改成功',
+            type: 'success'
+          })
+          this.refreshUI()
+        } else {
+          this.$message.error(response.data.errmsg)
+        }
+      })
+    },
+    setGold(row) {
+      var para = {}
+      para.mid = row.mid
+      if (row.mGoldLevel === 1) {
+        para.mGoldLevel = 0
+      } else {
+        para.mGoldLevel = 1
+      }
+      setmemGold(para).then(response => {
+        // console.log(response.data)
+        if (!response.data.errno) {
+          this.$message({
+            message: '权限修改成功',
+            type: 'success'
+          })
+          this.refreshUI()
+        } else {
+          this.$message.error(response.data.errmsg)
+        }
+      })
+    },
+    searchMoneyLog(row) {
+      this.isOpenMoneylogDia = true
+      console.log(row.mid)
+      this.$refs['moneyLog'].setMid(row.mid)
+    },
+    closeMonlogDia() {
+      this.isOpenMoneylogDia = false
+      this.$nextTick(() => {
+        this.$refs['moneyLog'].resetForm()
+      })
+    },
+    searchuser(row) {
+
     }
   },
   computed: {
@@ -341,6 +417,9 @@ export default {
 <style rel="stylesheet/scss" lang="scss" scoped>
 .app-container{
   padding:0;
+  .stylewid{
+    width:100%
+  }
 }
 .el-table {
   margin: 15px 0 5px;
