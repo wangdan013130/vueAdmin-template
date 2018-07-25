@@ -112,7 +112,7 @@ export default {
         productType: 0,
         time: [new Date().setTime(new Date().getTime() - 3600 * 1000 * 24 * 7), new Date().getTime()],
         selectedOptions: [0, 0, 0]
-      },
+      },   
       labelPosition: 'left',
       tableData: [],
       pdtoptions: [{

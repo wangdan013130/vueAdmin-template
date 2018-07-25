@@ -391,7 +391,7 @@ export default {
     },
     searchMoneyLog(row) {
       this.isOpenMoneylogDia = true
-      console.log(row.mid)
+      // console.log(row.mid)
       this.$refs['moneyLog'].setMid(row.mid)
     },
     closeMonlogDia() {
