@@ -12,7 +12,8 @@
                 </div>
               </template>
             <template slot="paneR">
-            <div class="right-container">              
+            <div class="right-container"> 
+                <user-card :image = "userpre"></user-card>
             </div>
             </template>
           </split-pane>
@@ -28,9 +29,10 @@
 <script>
 import { searchUser } from '@/api/user'
 import splitPane from 'vue-splitpane'
+import UserCard from '../components/UserCard'
 export default{
   name: 'userUi',
-  components: { splitPane },
+  components: { splitPane, UserCard },
   data() {
     return {
       uid: ''
@@ -55,6 +57,11 @@ export default{
     resize() {
       console.log('resize')
     }
+  },
+  computed: {
+    userpre() {
+      return require('@/assets/pre-img/user.png')
+    }  
   }
 }
 </script>
