@@ -19,10 +19,11 @@
        </el-row>
       </div>
       <addmem-dia :dialogFormVisible="isOpenaddMemDia" @refreshUI="refreshUI" @closeAddDia="closeAddDia" ref="addmethod"></addmem-dia>
-      <moneylog-dia :moneylogVisble="isOpenMoneylogDia" @closeAddDia="closeMonlogDia" ref="moneyLog" class="stylewid"></moneylog-dia>
+      <moneylog-dia :moneylogVisble="isOpenMoneylogDia" @closeMonlogDia="closeMonlogDia" ref="moneyLog" class="stylewid"></moneylog-dia>
+      <user-dia :playerdiaVisble="isOpenPlayerDia" @closeUserlogDia="closeUserlogDia" ref="playerDia"></user-dia>
       <el-table class="el-table"
       :data="list" v-loading.body="listLoading" size="mini" element-loading-text="Loading" 
-      max-height=600 border fit highlight-current-row
+      max-height=700 border fit highlight-current-row
       :default-sort = "{prop: 'mTime', order: 'descending'}">
       <el-table-column fixed align="center" prop='index' label='序号' width="80">
           <template slot-scope="scope">
@@ -117,14 +118,14 @@
         </el-table-column>
         <el-table-column sortable align="left" prop="mLastSellTime" label="最后售钻时间" width="90" :formatter="timetransform">
         </el-table-column>
-        <el-table-column prop="mMoneyLevel" align="center" label="钻石权限" width="80">
+        <el-table-column prop="mMoneyLevel" align="center" label="钻石权限" :filters="[{ text: '已关闭', value: 0 }, { text: '已开启', value: 1 }]" :filter-method="filterDia" width="100">
           <template slot-scope="scope">
-            <span>{{scope.row.mMoneyLevel ? "开启" : "关闭"}}</span>
+            <el-tag :type="scope.row.mMoneyLevel === 1 ? 'primary' : 'warning'">{{scope.row.mMoneyLevel ? "已开启" : "已关闭"}}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column v-if="switches.goldynSwitch" align="center" prop="mGoldLevel" label="金卡权限" width="80">
+        <el-table-column prop="mGoldLevel" v-if="switches.goldynSwitch" align="center" label="金卡权限" :filters="[{ text: '已关闭', value: 0 }, { text: '已开启', value: 1 }]" :filter-method="filterGold" width="100">
           <template slot-scope="scope">      
-            <span>{{scope.row.mGoldLevel ? "开启" : "关闭"}}</span>
+            <el-tag :type="scope.row.mGoldLevel === 1 ? 'primary' : 'warning'">{{scope.row.mGoldLevel ? "已开启" : "已关闭"}}</el-tag>
           </template>
         </el-table-column>
         <el-table-column align="center" prop="gameids" label="gameids" width="100">
@@ -135,17 +136,17 @@
         <el-table-column align="center" label="操作" width="150">
           <template slot-scope="scope">
             <el-dropdown size="mini" type="primary">
-            <el-button type="primary" size="mini">
-              操作／查询<i class="el-icon-arrow-down el-icon--right"></i>
-            </el-button>   
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item @click.native="setDia(scope.row)" v-if="scope.row.mMoneyLevel">关闭钻石权限</el-dropdown-item>
-              <el-dropdown-item @click.native="setDia(scope.row)" v-else>开启钻石权限</el-dropdown-item>
-              <el-dropdown-item @click.native="setGold(scope.row)" v-if="switches.goldynSwitch && scope.row.mGoldLevel" divided>关闭金卡权限</el-dropdown-item>
-              <el-dropdown-item @click.native="setGold(scope.row)" v-else-if="switches.goldynSwitch && (!scope.row.mGoldLevel)" divided>开启金卡权限</el-dropdown-item>
-              <el-dropdown-item @click.native="searchMoneyLog(scope.row)" divided>货币记录</el-dropdown-item>
-              <el-dropdown-item @click.native="searchUsercus(scope.row)" divided>玩家消耗明细</el-dropdown-item>
-            </el-dropdown-menu>
+              <el-button type="primary" size="mini">
+                操作／查询<i class="el-icon-arrow-down el-icon--right"></i>
+              </el-button>   
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item @click.native="setDia(scope.row)" v-if="scope.row.mMoneyLevel">关闭钻石权限</el-dropdown-item>
+                <el-dropdown-item @click.native="setDia(scope.row)" v-else>开启钻石权限</el-dropdown-item>
+                <el-dropdown-item @click.native="setGold(scope.row)" v-if="switches.goldynSwitch && scope.row.mGoldLevel" divided>关闭金卡权限</el-dropdown-item>
+                <el-dropdown-item @click.native="setGold(scope.row)" v-else-if="switches.goldynSwitch && (!scope.row.mGoldLevel)" divided>开启金卡权限</el-dropdown-item>
+                <el-dropdown-item @click.native="searchMoneyLog(scope.row)" divided>货币记录</el-dropdown-item>
+                <el-dropdown-item @click.native="searchUsercus(scope.row)" divided>玩家消耗明细</el-dropdown-item>
+              </el-dropdown-menu>
           </el-dropdown>
           </template>
        </el-table-column>
@@ -161,17 +162,17 @@
      </el-pagination>
   </div>
 </template>
-
 <script>
 import { getmembers, getmembersCount, setmemMoney, setmemGold } from '@/api/members'
 import { parseTime } from '@/utils/time'
 import SearchBar from '@/components/SearchBar'
 import AddmemDia from '../components/AddmemDia'
 import MoneylogDia from '../components/MoneylogDia'
+import UserDia from '../components/UserDia'
 const TIMESTAMP = new Date().getTime() + 3500 * 24 * 60 * 60 * 1000
 export default {
   name: 'members',
-  components: { SearchBar, AddmemDia, MoneylogDia },
+  components: { SearchBar, AddmemDia, MoneylogDia, UserDia },
   data() {
     return {
       list: [],
@@ -187,6 +188,7 @@ export default {
       addMemFlag: true,
       isOpenaddMemDia: false,
       isOpenMoneylogDia: false,
+      isOpenPlayerDia: false,
       sortOptions: [{
         key: '1',
         label: '查看使用账号'
@@ -233,12 +235,6 @@ export default {
       }, {
         key: 'mTime',
         label: '注册时间'
-      }, {
-        key: 'mMoneyLevel',
-        label: '有钻石权限'
-      }, {
-        key: 'mGoldLevel',
-        label: '有金卡权限'
       }
       ]
     }
@@ -400,8 +396,21 @@ export default {
         this.$refs['moneyLog'].resetForm()
       })
     },
-    searchuser(row) {
-
+    searchUsercus(row) {
+      this.isOpenPlayerDia = true
+      this.$refs['playerDia'].setMid(row.mid)
+    },
+    closeUserlogDia() {
+      this.isOpenPlayerDia = false
+      this.$nextTick(() => {
+        this.$refs['playerDia'].resetForm()
+      })
+    },
+    filterDia(value, row, column) {
+      return row['mMoneyLevel'] === value
+    },
+    filterGold(value, row, column) {
+      return row['mGoldLevel'] === value
     }
   },
   computed: {

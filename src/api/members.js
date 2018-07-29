@@ -47,3 +47,51 @@ export function getMoneylog(para) {
     data: para
   })
 }
+
+export function getUserlog(para) {
+  return request({
+    url: '/api/admin/getUserUseList',
+    method: 'post',
+    data: para
+  })
+}
+
+export function getRankList(url, para) {
+  return request({
+    url: url,
+    method: 'post',
+    data: para
+  })
+}
+
+export function getPersonBonus(para) {
+  return request({
+    url: '/api/memberData/getMemberScoreRecord',
+    method: 'post',
+    data: para
+  })
+}
+
+export function getQrcodeApply(para) {
+  return request({
+    url: '/api/admin/getQrcodeApply',
+    method: 'post',
+    data: para
+  })
+}
+
+export function approveQrcodeApply(para) {
+  return request({
+    url: '/api/admin/approvalQrcodeApply',
+    method: 'post',
+    data: para
+  })
+}
+
+export function refuseQrcodeApply(para) {
+  return request({
+    url: '/api/admin/refuseQrcodeApply',
+    method: 'post',
+    data: para
+  })
+}

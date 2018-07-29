@@ -283,9 +283,6 @@ export default {
       para.mid = this.form.mid
       console.log(para)
       getMoneylog(para).then(response => {
-        // this.total = response.data
-        // this.$emit('refreshUI')
-        // console.log(response.data)
         const rtn = response.data
         if (!rtn.rows || rtn.errno) {
           this.tableData = []
@@ -301,20 +298,6 @@ export default {
           type: 'success'
         })
         this.tableData = []
-        /* if (rtn.rows) {
-          if (!rtn.total) {
-            this.$message({
-              message: '没有记录',
-              type: 'success'
-            })
-            this.tableData = []
-          } else {
-            this.tableData = response.data
-          }
-        } else if (rtn.errno !== 0) {
-          this.tableData = []
-          this.$message.error(rtn.errmsg)
-        }*/
       })
     },
     resetForm() {
@@ -326,14 +309,14 @@ export default {
       this.tableData = []
     },
     closeDia() {
+      // console.log('closemoneylogdia')
       this.$emit('closeMonlogDia')
     },
     setMid(mid) {
       // console.log(mid)
       this.form.mid = mid
     }
-  },
-  computed: {}
+  }
 }
 </script>
 <style rel="stylesheet/scss" lang="scss" scope>

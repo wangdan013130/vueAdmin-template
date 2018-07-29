@@ -62,20 +62,20 @@ export const asyncRouterMap = [
       {
         path: 'rank',
         name: 'rank',
-        component: () => import('@/views/tree/index'),
+        component: () => import('@/views/members/rank/index'),
         meta: { title: 'rank', icon: 'rank', roles: [1, 3, 10] }
       },
       {
-        path: 'integrate',
-        name: 'integrate',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'integrate', icon: 'integrate', roles: [1, 3, 10] }
+        path: 'bonuscheck',
+        name: 'bonuscheck',
+        component: () => import('@/views/members/bonuscheck/index'),
+        meta: { title: 'bonuscheck', icon: 'bonuscheck', roles: [1, 3, 10] }
       },
       {
-        path: 'examine',
-        name: 'examine',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'examine', icon: 'examine', roles: [1, 3, 10] }
+        path: 'membercheck',
+        name: 'membercheck',
+        component: () => import('@/views/members/membercheck/index'),
+        meta: { title: 'membercheck', icon: 'membercheck', roles: [1, 3, 10] }
       }
     ]
   },
@@ -85,10 +85,10 @@ export const asyncRouterMap = [
     meta: { title: 'user', icon: 'user', roles: [1, 3, 10] },
     children: [
       {
-        path: 'sale',
-        name: 'sale',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'sale', icon: 'sale', roles: [1, 3, 10] }
+        path: 'yhgl',
+        name: 'yhgl',
+        component: () => import('@/views/user/yhgl/index'),
+        meta: { title: 'yhgl', icon: 'yhgl', roles: [1, 3, 10] }
       },
       {
         path: 'userstatistics',
