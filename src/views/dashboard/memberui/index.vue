@@ -7,7 +7,6 @@
 <script>
 import PanelGroup from './components/PanelGroup'
 import TodoList from './components/TodoList'
-
 export default {
   name: 'memberDashboard',
   components: { PanelGroup, TodoList }

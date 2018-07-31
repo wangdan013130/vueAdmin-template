@@ -3,23 +3,23 @@
         <div slot="header" class="clearfix header">
             <img class="user-avatar" :src="image">
             <div class="info-box">
-                <p>100001</p>
-                <p>哈哈哈哈<svg-icon icon-class="userlevel" class-name='userlevel'/>10</p>
-                <p>注册时间:2018-01-01 10:10:10</p>        
-            </div>      
+                <p :uid="uid">100001</p>
+                <p><span :nickname="nickname">哈哈哈哈</span><svg-icon icon-class="userlevel" class-name='userlevel'/><span :userlevel="userlevel">10</span></p>
+                <p>注册时间:<span :registertime="registertime">2018-01-01 10:10:10</span></p>       
+            </div>     
         </div>
         <div class="content">
             <el-row class="moneyrow">
-                <el-col :span="8"><div class="moneycol"><svg-icon icon-class="diamond" class-name='icon-class'/>1,000</div></el-col>
-                <el-col :span="8"><div class="moneycol"><svg-icon icon-class="goldcard" class-name='icon-class'/>10,000</div></el-col>
-                <el-col :span="8"><div class="moneycol"><svg-icon icon-class="coin" class-name='icon-class'/>1,000</div></el-col>
+                <el-col :span="8"><div class="moneycol"><svg-icon icon-class="diamond" class-name='icon-class'/><span :diamond="diamond">1,000</span></div></el-col>
+                <el-col :span="8"><div class="moneycol"><svg-icon icon-class="goldcard" class-name='icon-class'/><span :goldcard="goldcard">1,000</span></div></el-col>
+                <el-col :span="8"><div class="moneycol"><svg-icon icon-class="coin" class-name='icon-class'/><span :coin="coin">1,000</span></div></el-col>
             </el-row> 
             <el-row>
-                <el-col :span="8"><div class="">绑定代理111111</div></el-col>
-                <el-col :span="8"><div class="">比赛场大师分10,000</div></el-col> 
+                <el-col :span="8"><div>绑定代理<span :bindagent="bindagent">111111</span></div></el-col>
+                <el-col :span="8"><div>比赛场大师分<span :masterscore="masterscore">10,000</span></div></el-col> 
             </el-row>
             <el-row>
-                <el-col :span="24"><div class="grid-content bg-purple-dark">最后登录时间:2018-01-01 10:10:10</div></el-col>
+                <el-col :span="24"><div class="grid-content bg-purple-dark">最后登录时间:<span :lastlogintime="lastlogintime">2018-01-01 10:10:10</span></div></el-col>
             </el-row>
         </div>
     </el-card>
@@ -31,8 +31,48 @@ export default {
   props: {
     image: {
       type: String,
-      required: true,
       default: userpre
+    },
+    uid: {
+      type: Number,
+      required: true,
+      default: 0
+    },
+    nickname: {
+      type: String,
+      default: '暂无查询'
+    },
+    userlevel: {
+      type: Number,
+      default: 0  
+    },
+    bindagent: {
+      type: Number,
+      default: 0    
+    },
+    lastlogintime: {
+      type: String,
+      default: '2018-01-01 00:00:00' 
+    },
+    registertime: {
+      type: String,
+      default: '2018-01-01 00:00:00'  
+    },
+    masterscore: {
+      type: Number,
+      default: 0  
+    },
+    diamond: {
+      type: Number,
+      default: 0  
+    },
+    goldcard: {
+      type: Number,
+      default: 0  
+    },
+    coin: {
+      type: Number,
+      default: 0  
     } 
   }
 }

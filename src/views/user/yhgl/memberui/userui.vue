@@ -13,7 +13,7 @@
               </template>
             <template slot="paneR">
             <div class="right-container"> 
-                <user-card :image = "userpre"></user-card>
+                <user-card v-bind = "userinfo"></user-card>
             </div>
             </template>
           </split-pane>
@@ -35,7 +35,20 @@ export default{
   components: { splitPane, UserCard },
   data() {
     return {
-      uid: ''
+      uid: '',
+      userinfo: {
+        image: this.userpre,
+        uid: 0,
+        nickname: '暂无查询',
+        userlevel: 0,
+        bindagent: 0,
+        lastlogintime: '2018-01-01 00:00:00', 
+        registertime: '2018-01-01 00:00:00',
+        masterscore: 0,
+        diamond: 0,
+        goldcard: 0,
+        coin: 0  
+      }
     }
   },
   methods: {
@@ -60,7 +73,7 @@ export default{
   },
   computed: {
     userpre() {
-      return require('@/assets/pre-img/user.png')
+      return require('@/assets/preimg/user.png')
     }  
   }
 }
