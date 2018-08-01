@@ -16,7 +16,7 @@
             </el-row> 
             <el-row>
                 <el-col :span="8"><div>绑定代理<span :bindagent="bindagent">111111</span></div></el-col>
-                <el-col :span="8"><div>比赛场大师分<span :masterscore="masterscore">10,000</span></div></el-col> 
+                <el-col :span="16"><div>比赛场大师分<span :masterscore="masterscore">10,000</span></div></el-col> 
             </el-row>
             <el-row>
                 <el-col :span="24"><div class="grid-content bg-purple-dark">最后登录时间:<span :lastlogintime="lastlogintime">2018-01-01 10:10:10</span></div></el-col>
