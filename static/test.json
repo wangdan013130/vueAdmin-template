@@ -1,0 +1,48 @@
+,
+  props: {
+    image: {
+      type: String,
+      default: userpre
+    },
+    uid: {
+      type: Number,
+      required: true,
+      default: 0
+    },
+    nickname: {
+      type: String,
+      default: '暂无查询'
+    },
+    userlevel: {
+      type: Number,
+      default: 0  
+    },
+    bindagent: {
+      type: Number,
+      default: 0    
+    },
+    lastlogintime: {
+      type: String,
+      default: '2018-01-01 00:00:00' 
+    },
+    registertime: {
+      type: String,
+      default: '2018-01-01 00:00:00'  
+    },
+    masterscore: {
+      type: Number,
+      default: 0  
+    },
+    diamond: {
+      type: Number,
+      default: 0  
+    },
+    goldcard: {
+      type: Number,
+      default: 0  
+    },
+    coin: {
+      type: Number,
+      default: 0  
+    } 
+  },

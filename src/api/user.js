@@ -40,3 +40,11 @@ export function unbindAgent(para) {
   })
 }
 
+export function getActivityList(para) {
+  return request({
+    url: '/api/activity/getActivityList',
+    method: 'post',
+    data: para
+  })
+}
+

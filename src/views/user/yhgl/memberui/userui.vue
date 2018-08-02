@@ -20,12 +20,13 @@
                   <el-button :xs="6" :sm="6" :md="4" :lg="3" :xl="1" size="mini" type="primary" round>玩家战绩</el-button>
                   <el-button :xs="6" :sm="6" :md="4" :lg="3" :xl="1" size="mini" type="primary" round>活动记录</el-button>
                 </el-row>
-                <el-select v-model="" clearable placeholder="请选择">
+                <el-select v-model="selactivity" clearable placeholder="请选择">
                   <el-option
                     v-for="item in quickactivityopts"
                     :key="item.id"
                     :label="item.activity_name"
-                    :value="item.id">
+                    :value="item.id"
+                    @click.native="checkactivity">
                   </el-option>
                 </el-select>
                 </div>
@@ -47,7 +48,7 @@
 </template>
 <script>
 import userpre from '@/assets/preimg/user.png'
-import { searchUser, forceLogout, unbindAgent } from '@/api/user'
+import { searchUser, forceLogout, unbindAgent, getActivityList } from '@/api/user'
 import { parseTime } from '@/utils/time'
 import splitPane from 'vue-splitpane'
 import GiftMoney from '@/components/GiftMoney'
@@ -60,7 +61,9 @@ export default{
     return {
       uid: '',
       isOpengiftMoney: false,
-      isMember: false
+      isMember: false,
+      selactivity:'',
+      quickactivityopts:[]
     }
   },
   methods: {
@@ -193,11 +196,28 @@ export default{
         })
       })
     },
+    getList() {
+      getActivityList({start:0, limit:30}).then(response => {
+        const rtn = response.data
+        if (rtn.total > 0) {
+          this.quickactivityopts = rtn.rows.map( (v,idx,item) => {
+            if (v.show === '1')
+            return item
+          })
+          this.selactivity = this.quickactivityopts[0]['id']
+        }
+     })
+    },
     quickActivity() {
       let para = {}
       para.start = 0
       para.limit = 30
-
+    },
+    checkactivity() {
+      
+      postJson("/activity/queryUserStatus",{uid:uid,activity_id:activityIdEarly},function(data){
+                activeShow(activityIdEarly,data,uid);
+            });
     },
     resize() {
       console.log('resize')
@@ -210,6 +230,9 @@ export default{
     clubSwitch() {
       return this.$root.$allSwitch.clubModeSwitch
     }  
+  },
+  created () {
+    this.getList()
   }
 }
 </script>
