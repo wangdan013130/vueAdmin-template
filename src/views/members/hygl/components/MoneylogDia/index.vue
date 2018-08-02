@@ -281,7 +281,6 @@ export default {
       para.startTime = parseTime(this.form.time[0], '{y}-{m}-{d}')
       para.endTime = parseTime(this.form.time[1], '{y}-{m}-{d}')
       para.mid = this.form.mid
-      console.log(para)
       getMoneylog(para).then(response => {
         const rtn = response.data
         if (!rtn.rows || rtn.errno) {

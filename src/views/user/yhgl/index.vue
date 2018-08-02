@@ -33,3 +33,8 @@ export default {
   }
 }
 </script>
+<style rel="stylesheet/scss" lang="scss" scoped>
+.app-container {
+  background-color: #f0f2f5;
+}
+</style>

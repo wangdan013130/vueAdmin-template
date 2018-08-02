@@ -1,25 +1,25 @@
 <template>
     <el-card shadow="hover" id="usercardbox">
         <div slot="header" class="clearfix header">
-            <img class="user-avatar" :src="image">
+            <img class="user-avatar" :src="userinfo.image">
             <div class="info-box">
-                <p :uid="uid">100001</p>
-                <p><span :nickname="nickname">哈哈哈哈</span><svg-icon icon-class="userlevel" class-name='userlevel'/><span :userlevel="userlevel">10</span></p>
-                <p>注册时间:<span :registertime="registertime">2018-01-01 10:10:10</span></p>       
+                <p>ID:{{userinfo.uid}}</p>
+                <p><span>{{userinfo.nickname}}</span><svg-icon icon-class="userlevel" class-name='userlevel'/><span>{{userinfo.userlevel}}</span></p>
+                <p>注册时间:<span>{{userinfo.registertime}}</span></p>       
             </div>     
         </div>
         <div class="content">
             <el-row class="moneyrow">
-                <el-col :span="8"><div class="moneycol"><svg-icon icon-class="diamond" class-name='icon-class'/><span :diamond="diamond">1,000</span></div></el-col>
-                <el-col :span="8"><div class="moneycol"><svg-icon icon-class="goldcard" class-name='icon-class'/><span :goldcard="goldcard">1,000</span></div></el-col>
-                <el-col :span="8"><div class="moneycol"><svg-icon icon-class="coin" class-name='icon-class'/><span :coin="coin">1,000</span></div></el-col>
+                <el-col :span="8"><div class="moneycol"><svg-icon icon-class="diamond" class-name='icon-class'/><span>{{userinfo.diamond}}</span></div></el-col>
+                <el-col :span="8"><div class="moneycol"><svg-icon icon-class="goldcard" class-name='icon-class'/><span>{{userinfo.goldcard}}</span></div></el-col>
+                <el-col :span="8"><div class="moneycol"><svg-icon icon-class="coin" class-name='icon-class'/><span>{{userinfo.coin}}</span></div></el-col>
             </el-row> 
             <el-row>
-                <el-col :span="8"><div>绑定代理<span :bindagent="bindagent">111111</span></div></el-col>
-                <el-col :span="16"><div>比赛场大师分<span :masterscore="masterscore">10,000</span></div></el-col> 
+                <el-col :span="8"><div>绑定代理<span>{{userinfo.bindagent}}</span></div></el-col>
+                <el-col :span="16"><div>比赛场大师分<span>{{userinfo.masterscore}}</span></div></el-col> 
             </el-row>
             <el-row>
-                <el-col :span="24"><div class="grid-content bg-purple-dark">最后登录时间:<span :lastlogintime="lastlogintime">2018-01-01 10:10:10</span></div></el-col>
+                <el-col :span="24"><div class="grid-content bg-purple-dark">最后登录时间:<span>{{userinfo.registertime}}</span></div></el-col>
             </el-row>
         </div>
     </el-card>
@@ -28,52 +28,28 @@
 import userpre from '@/assets/preimg/user.png'
 export default {
   name: 'UserCard',
-  props: {
-    image: {
-      type: String,
-      default: userpre
-    },
-    uid: {
-      type: Number,
-      required: true,
-      default: 0
-    },
-    nickname: {
-      type: String,
-      default: '暂无查询'
-    },
-    userlevel: {
-      type: Number,
-      default: 0  
-    },
-    bindagent: {
-      type: Number,
-      default: 0    
-    },
-    lastlogintime: {
-      type: String,
-      default: '2018-01-01 00:00:00' 
-    },
-    registertime: {
-      type: String,
-      default: '2018-01-01 00:00:00'  
-    },
-    masterscore: {
-      type: Number,
-      default: 0  
-    },
-    diamond: {
-      type: Number,
-      default: 0  
-    },
-    goldcard: {
-      type: Number,
-      default: 0  
-    },
-    coin: {
-      type: Number,
-      default: 0  
-    } 
+  data() {
+    return {
+      userinfo: {
+        uid: '暂无查询',
+        money: 0,
+        image: userpre,
+        nickname: '暂无查询',
+        userlevel: 0,
+        bindagent: 0,
+        lastlogintime: '2018-01-01 00:00:00', 
+        registertime: '2018-01-01 00:00:00',
+        masterscore: 0,
+        diamond: 0,
+        goldcard: 0,
+        coin: 0  
+      }
+    }
+  },
+  methods: {
+    setUerInfor(userinfo) {
+      this.userinfo = userinfo
+    }
   }
 }
 </script>

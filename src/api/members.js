@@ -40,6 +40,14 @@ export function setmemGold(para) {
   })
 }
 
+export function addmemMoneyYes(url, para) {
+  return request({
+    url: url,
+    method: 'post',
+    data: para
+  })
+}
+
 export function getMoneylog(para) {
   return request({
     url: '/api/newMember/getMemberCurrency',
@@ -95,3 +103,4 @@ export function refuseQrcodeApply(para) {
     data: para
   })
 }
+

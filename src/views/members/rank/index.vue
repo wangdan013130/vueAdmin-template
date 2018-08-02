@@ -3,7 +3,7 @@
      <div class="filter-container">
        <el-form :inline="true" :model="form" :label-position="labelPosition">
            <el-form-item>
-              <el-select v-model="form.ranktype" placeholder="选择排行类型">
+              <el-select size="mini" v-model="form.ranktype" placeholder="选择排行类型">
                 <el-option @click.native="getRankType" v-for="item in rankTypeArr" :key="item.value" :value="item.value" :label="item.label" ></el-option>
               </el-select>
             </el-form-item>
